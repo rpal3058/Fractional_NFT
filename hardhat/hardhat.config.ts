@@ -21,7 +21,7 @@ const config: HardhatUserConfig = {
   networks: {
     hardhat: {},
     localhost: {
-      url: "http://127.0.0.1:7545", //Make sure Ganache GUI is linked to this network
+      url: "http://0.0.0.0:7545", //Make sure Ganache GUI is linked to this network
     },
     mumbai: {
       // Infura
