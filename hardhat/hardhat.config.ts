@@ -8,7 +8,7 @@ import "@typechain/hardhat";
 import "@nomiclabs/hardhat-etherscan";
 import "solidity-coverage";
 
-const INFURA_API_KEY = process.env.INFURA || "";
+const MATIC_API_KEY = process.env.MATIC || "";
 const MNEMONIC = process.env.MNEMONIC || "";
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN;
 
@@ -21,24 +21,24 @@ const config: HardhatUserConfig = {
   networks: {
     hardhat: {},
     localhost: {
-      url: "http://0.0.0.0:7545", //Make sure Ganache GUI is linked to this network
+      url: "http://0.0.0.0:8545", //Make sure Ganache GUI is linked to this network
     },
     mumbai: {
       // Infura
-      url: `https://polygon-mumbai.infura.io/v3/${INFURA_API_KEY}`,
+      url: `https://rpc-mumbai.maticvigil.com/v1/${MATIC_API_KEY}`,
       accounts: {
         mnemonic: process.env.MNEMONIC,
       },
     },
     matic: {
       // Infura
-      url: `https://polygon-mainnet.infura.io/v3/${INFURA_API_KEY}`,
+      url: `https://rpc-mainnet.maticvigil.com/v1/${MATIC_API_KEY}`,
       accounts: {
         mnemonic: process.env.MNEMONIC,
       },
     },
     rinkeby: {
-      url: `https://rinkeby.infura.io/v3/${INFURA_API_KEY}`,
+      url: `https://rinkeby.infura.io/v3/${MATIC_API_KEY}`,
       accounts: {
         mnemonic: process.env.MNEMONIC,
       },

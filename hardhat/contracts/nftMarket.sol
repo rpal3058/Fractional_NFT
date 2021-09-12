@@ -18,7 +18,6 @@ contract nftMarket is ERC721URIStorage, ReentrancyGuard{
         
     }
     
-    
     using Counters for Counters.Counter;
     Counters.Counter public tokenID; 
     

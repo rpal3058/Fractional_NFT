@@ -6,7 +6,7 @@ This is a starter kit for developing, testing, and deploying smart contracts wit
 
 [Blog Post](https://medium.com/@rahulsethuram/the-new-solidity-dev-stack-buidler-ethers-waffle-typescript-tutorial-f07917de48ae)
 
-## Using this Project
+# Using this Project
 
 Clone this repository, then install the dependencies with `npm install`. Build everything with `npm run build`. https://hardhat.org has excellent docs, and can be used as reference for extending this project.
 
