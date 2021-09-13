@@ -24,15 +24,15 @@ const config: HardhatUserConfig = {
       url: "http://0.0.0.0:8545", //Make sure Ganache GUI is linked to this network
     },
     mumbai: {
-      // Infura
-      url: `https://rpc-mumbai.maticvigil.com/v1/${MATIC_API_KEY}`,
+      // Moralis
+      url: `https://speedy-nodes-nyc.moralis.io/${MATIC_API_KEY}/polygon/mumbai`,
       accounts: {
         mnemonic: process.env.MNEMONIC,
       },
     },
     matic: {
-      // Infura
-      url: `https://rpc-mainnet.maticvigil.com/v1/${MATIC_API_KEY}`,
+      // Moralis
+      url: `https://speedy-nodes-nyc.moralis.io/${MATIC_API_KEY}/polygon/mainnet`,
       accounts: {
         mnemonic: process.env.MNEMONIC,
       },

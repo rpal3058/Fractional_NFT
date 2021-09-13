@@ -6,7 +6,7 @@ dataSources:
     name: nftMarket
     network: mumbai
     source:
-      address: "0xC180a6606F2492b96794B8B242A3C8B9cBDe2240"
+      address: "0xea7E0ffAfA5886fFB6D76FEBD0220920212b6484"
       abi: nftMarket
       startBlock: 18856665
     mapping:
