@@ -1,6 +1,6 @@
 specVersion: 0.0.2
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum/contract
     name: nftMarket
@@ -14,23 +14,14 @@ dataSources:
       apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
-        # - Approval
-        # - ApprovalForAll
-        # - Transfer
         - nft_Created
         - nft_Sale
       abis:
         - name: nftMarket
-          file: ./abis/nftMarket.json
+          file: nftMarket/abis/nftMarket.json
       eventHandlers:
-        # - event: Approval(indexed address,indexed address,indexed uint256)
-        #   handler: handleApproval
-        # - event: ApprovalForAll(indexed address,indexed address,bool)
-        #   handler: handleApprovalForAll
-        # - event: Transfer(indexed address,indexed address,indexed uint256)
-        #   handler: handleTransfer
         - event: nft_Created(uint256,string,address,address,uint256,bool)
           handler: handlenft_Created
         - event: nft_Sale(uint256,address,bool)
           handler: handlenft_Sale
-      file: ./src/mapping.ts
+      file: nftMarket/nftMarket.wasm

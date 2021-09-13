@@ -1,71 +1,33 @@
 import { BigInt } from "@graphprotocol/graph-ts"
 import {
-  nftMarket,
-  Approval,
-  ApprovalForAll,
-  Transfer,
+  // nftMarket,
+  // Approval,
+  // ApprovalForAll,
+  // Transfer,
   nft_Created,
   nft_Sale
 } from "../generated/nftMarket/nftMarket"
-import { ExampleEntity } from "../generated/schema"
+import { nftEntity } from "../generated/schema"
 
-export function handleApproval(event: Approval): void {
-  // Entities can be loaded from the store using a string ID; this ID
-  // needs to be unique across all entities of the same type
-  let entity = ExampleEntity.load(event.transaction.from.toHex())
-
-  // Entities only exist after they have been saved to the store;
-  // `null` checks allow to create entities on demand
+export function handlenft_Created(event: nft_Created): void {
+  let entity = nftEntity.load( event.params.tokenID.toHexString())
   if (entity == null) {
-    entity = new ExampleEntity(event.transaction.from.toHex())
-
-    // Entity fields can be set using simple assignments
-    entity.count = BigInt.fromI32(0)
+    entity = new nftEntity(event.params.tokenID.toHexString())
   }
-
-  // BigInt and BigDecimal math are supported
-  entity.count = entity.count + BigInt.fromI32(1)
-
-  // Entity fields can be set based on event parameters
-  entity.owner = event.params.owner
-  entity.approved = event.params.approved
-
-  // Entities can be written to the store with `.save()`
+  entity.tokenID = event.params.tokenID
+  entity.tokenURI= event.params.tokenURI
+  entity.creator= event.params.owner
+  entity.currentOwner= event.params.owner
+  entity.operator= event.params.operator
+  entity.salePrice= event.params.price
+  entity.sold= event.params.sold
   entity.save()
-
-  // Note: If a handler doesn't require existing field values, it is faster
-  // _not_ to load the entity from the store. Instead, create it fresh with
-  // `new Entity(...)`, set the fields that should be updated and save the
-  // entity back to the store. Fields that were not set or unset remain
-  // unchanged, allowing for partial updates to be applied.
-
-  // It is also possible to access smart contracts from mappings. For
-  // example, the contract that has emitted the event can be connected to
-  // with:
-  //
-  // let contract = Contract.bind(event.address)
-  //
-  // The following functions can then be called on this contract to access
-  // state variables and other data:
-  //
-  // - contract.balanceOf(...)
-  // - contract.contractBalance(...)
-  // - contract.getApproved(...)
-  // - contract.isApprovedForAll(...)
-  // - contract.listingPrice(...)
-  // - contract.name(...)
-  // - contract.nftDetails(...)
-  // - contract.ownerOf(...)
-  // - contract.supportsInterface(...)
-  // - contract.symbol(...)
-  // - contract.tokenID(...)
-  // - contract.tokenURI(...)
 }
 
-export function handleApprovalForAll(event: ApprovalForAll): void {}
-
-export function handleTransfer(event: Transfer): void {}
-
-export function handlenft_Created(event: nft_Created): void {}
-
-export function handlenft_Sale(event: nft_Sale): void {}
+export function handlenft_Sale(event: nft_Sale): void {
+  let entity = nftEntity.load(event.params.tokenID.toHexString())
+  entity.tokenID = event.params.tokenID
+  entity.currentOwner= event.params.newOwner
+  entity.sold= event.params.sold
+  entity.save()
+}

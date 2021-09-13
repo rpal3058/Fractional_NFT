@@ -11,11 +11,10 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 contract nftMarket is ERC721URIStorage, ReentrancyGuard{
-    event nft_Created(uint tokenID, string tokenURI, address owner, address operator, uint price);
-    event nft_Sale (uint tokenID,address newOwner); 
-        
-    constructor() ERC721("myNFT","NFT"){
-        
+    event nft_Created(uint tokenID, string tokenURI, address owner, address operator, uint price, bool sold);
+    event nft_Sale (uint tokenID,address newOwner, bool sold); 
+
+    constructor() ERC721("myNFT","NFT"){        
     }
     
     using Counters for Counters.Counter;
@@ -42,14 +41,15 @@ contract nftMarket is ERC721URIStorage, ReentrancyGuard{
         _mint(msg.sender, currentTokenID);
         _setTokenURI(currentTokenID,_tokenURI);
         setApprovalForAll(address(this), true); //we are approving market to transact the NFT our behalf
-        emit nft_Created (currentTokenID, _tokenURI, msg.sender, address(this), _price); //emitting an event for the graph to track the nft Created
         
         //Updating the nft struct with the details
+        require(balanceOf(msg.sender)!=0, "The token creation was not succesful");
         nftDetails[currentTokenID].tokenID = currentTokenID;
         nftDetails[currentTokenID].creator = msg.sender;
         nftDetails[currentTokenID].currentOwner = msg.sender;
         nftDetails[currentTokenID].salePrice = _price;
         nftDetails[currentTokenID].sold = false;
+        emit nft_Created (currentTokenID, _tokenURI, msg.sender, address(this), _price, false); //emitting an event for the graph to track the nft Created
     }
     
     function nftSale(uint256 _tokenID) public payable{
@@ -58,12 +58,13 @@ contract nftMarket is ERC721URIStorage, ReentrancyGuard{
     
       //transfering ownership of the the token
       IERC721(address(this)).transferFrom(ownerOf(_tokenID), msg.sender, _tokenID);
-      emit nft_Sale(_tokenID,msg.sender); 
-    
+      
       //Updating the nft Details
+      require(balanceOf(msg.sender)!=0, "The token transfer was not succesful");
       payable(nftDetails[_tokenID].currentOwner).transfer(msg.value);
       nftDetails[_tokenID].currentOwner = msg.sender;
       nftDetails[_tokenID].sold = true;
+      emit nft_Sale(_tokenID,msg.sender, nftDetails[_tokenID].sold); 
     }
     
     function contractBalance() public view returns(uint256){
