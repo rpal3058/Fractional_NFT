@@ -8,7 +8,8 @@ import "@typechain/hardhat";
 import "@nomiclabs/hardhat-etherscan";
 import "solidity-coverage";
 
-const MATIC_API_KEY = process.env.MATIC || "";
+const MORALIS_API_KEY = process.env.MORALIS || "";
+const INFURA_API_KEY = process.env.INFURA || "";
 const MNEMONIC = process.env.MNEMONIC || "";
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN;
 
@@ -24,21 +25,19 @@ const config: HardhatUserConfig = {
       url: "http://0.0.0.0:8545", //Make sure Ganache GUI is linked to this network
     },
     mumbai: {
-      // Moralis
-      url: `https://speedy-nodes-nyc.moralis.io/${MATIC_API_KEY}/polygon/mumbai`,
+      url: `https://speedy-nodes-nyc.moralis.io/${MORALIS_API_KEY}/polygon/mumbai`,
       accounts: {
         mnemonic: process.env.MNEMONIC,
       },
     },
     matic: {
-      // Moralis
-      url: `https://speedy-nodes-nyc.moralis.io/${MATIC_API_KEY}/polygon/mainnet`,
+      url: `https://speedy-nodes-nyc.moralis.io/${MORALIS_API_KEY}/polygon/mainnet`,
       accounts: {
         mnemonic: process.env.MNEMONIC,
       },
     },
     rinkeby: {
-      url: `https://rinkeby.infura.io/v3/${MATIC_API_KEY}`,
+      url: `https://rinkeby.infura.io/v3/${INFURA_API_KEY}`,
       accounts: {
         mnemonic: process.env.MNEMONIC,
       },

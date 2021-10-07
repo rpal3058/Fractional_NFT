@@ -4,11 +4,14 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: nftMarket
-    network: mumbai
+    # network: mumbai
+    network: rinkeby
     source:
-      address: "0xea7E0ffAfA5886fFB6D76FEBD0220920212b6484"
+    # address: "0x4d8bE1d1eFf0B746f02C8849E9a43e48a1087218" (Mumbai Network Address)
+      address: "0x7061f71A61b37dC6BAF046CD01846E636dBa2c4E"
       abi: nftMarket
-      startBlock: 18856665
+    # startBlock: 18856665
+      startBlock: 9369181
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
