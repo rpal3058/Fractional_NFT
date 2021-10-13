@@ -1,9 +1,12 @@
-import getWeb3 from "../containers/web3"
-import {createContext, useEffect,useState } from 'react';
+import getWeb3 from "../../containers/web3"
+import {useEffect,useState } from 'react';
 import {useRouter } from "next/router";
-
+import { createContainer } from "unstated-next"; // Unstated-next containerization
+import { Fragment } from 'react';
+import Link from 'next/link';
+  
 //DONT include async function to export since it might create problem in the child componenets
-export default  function Sidebar() {
+export default function Sidebar() {
   //To track the rendering flow
     useEffect(()=>{
     console.log("Loading Side Bar...")
@@ -16,9 +19,6 @@ export default  function Sidebar() {
   const [connected, setConnected] = useState(false)
   const [accAddress, setAccAddress] = useState("")
   const [network,setNetwork] = useState("...")
-  const [marketPlace, setMarketPlace] = useState(false)
-  const [myCollection, setMyCollection] = useState(false)
-  const [ipfs,setIpfs] = useState(null)
 
   useEffect(() => {
     if(address){
@@ -28,11 +28,6 @@ export default  function Sidebar() {
       setConnected(false)
     }
   },[address])
-  
-  //routes it to the home page  
-  const onHome = () => {
-    router.push("/");
-  };
  
   useEffect(()=>{
     setAccAddress(address)
@@ -66,17 +61,10 @@ export default  function Sidebar() {
   },[address,web3])
   
   return (
-    <div className="w-60 relative z-20 flex-shrink-0  h-screen px-2 overflow-y-auto bg-blue-800 sm:block">
+    <Fragment>
+    <div className="float-left auto w-60 relative z-20 flex-shrink-0 py-2  h-screen px-2 overflow-y-auto bg-blue-800 sm:block">
        <div className="mb-6">
        <nav>             
-            {/* Home button */}
-            <button className="font-bold" onClick={() => onHome()}>
-              <a href="#" className="text-white flex items-center space-x-2 px-4 my-8">
-                    <span className="text-1xl text-white font-extrabold">NFT MARKET</span>
-                </a>       
-            </button>
-            {/* END OF HOME BUTTON */}
-
             {/* BUTTON TO CONNECT TO THE WALLET */}
             {connected ? (
             <a className="block py-6 px-4 text-white my-2">
@@ -97,14 +85,15 @@ export default  function Sidebar() {
               </button>
             </a>  
             )}
-            {/* BUTTON TO CONNECT TO THE WALLET */}
-  
+            {/* END BUTTON TO CONNECT TO THE WALLET */}
+            <br></br>  
             <a className="block py-2 px-4 text-white my-2">
             Account:
               <div className="block py-2 px-4 text-xs text-white">
                   <h1>{accAddress.slice(0, 5) + "..." + accAddress.slice(accAddress.length - 5)}</h1>
               </div>
             </a>
+            <br></br>
 
             <a  className="block py-2 px-4 text-white my-2">
             Network:
@@ -112,30 +101,16 @@ export default  function Sidebar() {
                   <h1>{network}</h1>
               </div>
             </a>
-
-             {/* MARKETPLACE BUTTON */}
-             <a className="block py-2 px-4 text-white my-2"> 
-              <button
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                onClick={() => setMarketPlace(true)}
-              >
-                MARKETPLACE
-              </button>
-            </a> 
-            {/* END OF MARKETPLACE BUTTON */}
-
-            {/* MY COLLECTION BUTTON */}
-              <a className="block py-2 px-4 text-white my-2"> 
-              <button
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                onClick={() => setMyCollection(true)}
-              >
-                MY COLLECTION
-              </button>
-            </a> 
-            {/* END OF MY COLLECTION BUTTON */}
+            <br></br>  
+            {/*CREATING NEW NFT*/ }
+            <a className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mx-4 my-4">
+              <Link href='/createNft'>+ NFT CREATE</Link> 
+            </a>
+            {/*END OF CREATING NEW NFT*/ }
         </nav>
         </div>
-    </div>  
+    </div>
+    </Fragment>  
   )
 }     
+

@@ -1,5 +1,8 @@
+import { Fragment } from 'react';
+
 import { useEffect} from "react";
 import Sidebar from "./sidebar";
+import Header from "./header";
 
 export default function Layout(props) {
   //To track the rendering flow
@@ -7,11 +10,11 @@ export default function Layout(props) {
     console.log("Loading Layout...")
   },[])
    
-  //refer : https://nextjs.org/docs/basic-features/layouts
   return (
-    <div>
-      <Sidebar/>
-        {props.children}
-    </div> 
+    <Fragment >
+      <Header/>
+        <Sidebar />
+          {props.children}
+    </Fragment> 
   );
 }
