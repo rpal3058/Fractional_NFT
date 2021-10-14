@@ -11,7 +11,7 @@ export default function HomePage() {
 const router = useRouter()
 const {nft,address,web3} = getWeb3.useContainer()
 const [meta,setMeta] = useState([]);
-const [loaded, setLoaded] =useState(false)
+const [processing, setProcessing] =useState(false)
 const { nftid } = router.query;
 let nftDetails
 let tempMetaArray = []
@@ -50,18 +50,19 @@ async function getMeta(e){
         tempMetaArray.push(tempMeta)
         console.log(tempMetaArray)
         setMeta(tempMetaArray)
-        setLoaded(true)
+        setProcessing(true)
     }
 } 
 const buy = async()=>{
-    setLoaded(false)    
+    setProcessing(false)    
     try {
         if(web3!=null){
         // let listingValue = web3.utils.toWei(".025", 'ether') //converting ether to Wei format. Note the output will be a BN
         // let formatPrice = web3.utils.toWei(price.toString(),"ether")  //converting ether to Wei format. Note the output will be a BN
         const tx = await nft.methods.nftSale(meta[0].id).send({from:address, value:meta[0].price}) 
             if(tx){
-                setLoaded(true) //to disable the processing icon
+                setProcessing(true) //to disable the processing icon
+                router.push("/") //closing the button
             }  
         }
         else //rechecking if the wallet is connected
@@ -77,7 +78,7 @@ const buy = async()=>{
   
 return (
      <div className="fixed bg-gray-900  items-center flex overflow-x-hidden overflow-y-auto inset-0 z-20 ">
-    {loaded ?(
+    {processing ?(
         <div className="max-w-lg mx-auto">
             {/*header*/}
             <div className="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm mb-5">

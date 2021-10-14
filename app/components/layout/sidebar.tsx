@@ -62,7 +62,7 @@ export default function Sidebar() {
   
   return (
     <Fragment>
-    <div className="float-left auto w-60 relative z-20 flex-shrink-0 py-2  h-screen px-2 overflow-y-auto bg-blue-800 sm:block">
+    <div className="float-left auto w-60 h-screen relative z-20 flex-shrink-0 py-2  h-screen px-2 overflow-y-scroll bg-blue-800 sm:block">
        <div className="mb-6">
        <nav>             
             {/* BUTTON TO CONNECT TO THE WALLET */}

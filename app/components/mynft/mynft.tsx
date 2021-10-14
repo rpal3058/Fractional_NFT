@@ -13,42 +13,35 @@ export default function MyNft() {
   },[]) 
 
   const [meta,setMeta] = useState([]);
-  const [load, setLoad] =useState(false)
+  const [load, setLoad] =useState(true)
   const [processed, setProcessed] = useState(true)
   let nftDetails
   let tempMetaArray = []
   let count=0  
 
-  // async function underProcess(){
-  //   setProcessed(false)
-  //   setTimeout(()=>{
-  //     setProcessed(true)
-  //   },500)
-  // }
-
   //getting all the NFT in the smart contract from the graph
   useEffect(()=>{
   async function fetchData(){  
     if(address){
-      setLoad(true)
       setProcessed(false)
       //getting the list of nft from subgraph
       nftDetails = await getNftList()
       if(nftDetails){
         setProcessed(true)
         nftDetails.map((e)=>{
-          if(e.currentOwner==address) //this is to check if the details from the subgraph has been propoerly loaded
+          if(e.currentOwner==address ) //this is to check if the details from the subgraph has been propoerly loaded
           {
+            setLoad(true)
             count++
             getMeta(e)     
           }
-          else
-          {
-            setLoad(false)
-          }
         })
+        if(count==0){
+          setLoad(false) //if therre are no nft then set the load to false
+        }    
       }      
-    }else{
+    }
+    else{
       setLoad(false)
     }
   }  
@@ -72,7 +65,6 @@ export default function MyNft() {
     //added to the array before setting the state 
     // console.log(count)
     if(count==tempMetaArray.length){
-      
       console.log("Complete Meta")
       console.log(tempMetaArray)
       setMeta(tempMetaArray)
@@ -81,22 +73,22 @@ export default function MyNft() {
 
   return(
     <div>
-      <h1 className="relative  md:text-3xl font-medium my-8 px-80">NFT MARKETPLACE</h1>      
+      <h1 className="relative  md:text-3xl font-medium my-8 px-80">MY NFT</h1>      
       {processed?(
         load?(
          meta.map((meta)=>{
           return(
             <button>
-            <div className="relative ml-10 w-80 h-96 bg-cover bg-center group rounded-lg overflow-hidden shadow-lg">
+            <div className="p-4 relative ml-10 w-80 h-80 bg-cover bg-center group rounded-lg overflow-hidden shadow-lg">
               <div className=" max-w-sm min-w-[340px] bg-white shadow-md rounded-3xl p-2 mx-1  cursor-pointer">
                 <div className="overflow-x-hidden rounded-2xl relative">
                   <img className="h-40 rounded-2xl w-full object-cover" src={meta.image} ></img>
                 </div>
               </div>
-              <div className=".list-none mt-4 pl-2 mb-2 py-2 break-all">
-                <p className="font-semibold text-gray-900 my-1 py-2">{meta.title}</p>
-                <p className="text-gray-800 my-1 py-2">{meta.description}</p>
-                <p className="text-gray-800 my-1 py-2">{meta.price/1000000000000000000} Eth </p> 
+              <div className=".list-none mt-4 pl-2 mb-2 pt-1 break-all">
+                <p className="font-semibold text-gray-900 my-1 pt-1">{meta.title}</p>
+                <p className="text-gray-800 my-1 pt-1">{meta.description}</p>
+                <p className="text-gray-800 my-1 pt-1">{meta.price/1000000000000000000} Eth </p> 
               </div>
             </div>  
             </button>
