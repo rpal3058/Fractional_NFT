@@ -1,14 +1,13 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import Head from 'next/head';
-import Market from "../components/market/market"
 
-export default function HomePage() {
+export default function HomePage(props) {
+
     return (
         <Fragment>
          <Head>
-           <title>NFT MARKET PLACE</title>
+           <title>FRACTIONAL NFT</title>
          </Head>
-         <Market/>
         </Fragment>
     )
 }
