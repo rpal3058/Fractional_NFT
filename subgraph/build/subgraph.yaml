@@ -1,0 +1,27 @@
+specVersion: 0.0.2
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: nftMarket
+    network: rinkeby
+    source:
+      address: "0x7061f71A61b37dC6BAF046CD01846E636dBa2c4E"
+      abi: nftMarket
+      startBlock: 9369181
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - nft_Created
+        - nft_Sale
+      abis:
+        - name: nftMarket
+          file: nftMarket/abis/nftMarket.json
+      eventHandlers:
+        - event: nft_Created(uint256,string,address,address,uint256,bool)
+          handler: handlenft_Created
+        - event: nft_Sale(uint256,address,bool)
+          handler: handlenft_Sale
+      file: nftMarket/nftMarket.wasm

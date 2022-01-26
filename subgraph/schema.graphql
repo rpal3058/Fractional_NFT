@@ -1,0 +1,10 @@
+type nftEntity @entity {
+  id: ID!
+  tokenID: BigInt!
+  tokenURI: String
+  creator: Bytes!
+  currentOwner: Bytes!
+  operator: Bytes!
+  salePrice: BigInt
+  sold: Boolean!
+}
