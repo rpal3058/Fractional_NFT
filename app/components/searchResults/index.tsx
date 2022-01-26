@@ -27,7 +27,7 @@ async function fetchAssetDetails(){
   if(tokenDetails){
     if(openSeaPort){
       const asset= await openSeaPort.api.getAsset({
-        tokenAddress, // string
+        tokenAddress, // strin
         tokenId, // string | number | null
       })
       setAssets(asset)
